@@ -15,6 +15,20 @@ enum MovementMaskValues {
 	RIGHT = 8
 }
 
+const moveAnimationDictionary = {
+	Orientation.UP: "walk_up",
+	Orientation.DOWN: "walk_down",
+	Orientation.RIGHT: "walk_right",
+	Orientation.LEFT: "walk_right"
+}
+
+const idleAnimationDictionary = {
+	Orientation.UP: "idle_up",
+	Orientation.DOWN: "idle_down",
+	Orientation.RIGHT: "idle_right",
+	Orientation.LEFT: "idle_right"
+}
+
 var _movementMask = 0
 var _isMoving = false
 var _orientation = Orientation.RIGHT
@@ -30,20 +44,23 @@ func _updateSpeed(delta):
 		_movementSpeed.x != 0):
 		var newMovementSpeed = _movementSpeed
 		var signX = sign(newMovementSpeed.x)
-		newMovementSpeed.x -= signX * _deceleration.x
+		newMovementSpeed.x -= signX * _deceleration.x * delta
+		
 		if (sign(newMovementSpeed.x) != signX):
 			newMovementSpeed.x = 0
+		
 		_setMovementSpeed(newMovementSpeed)
 	if (_movementMask & MovementMaskValues.UP == 0 and
 		_movementMask & MovementMaskValues.DOWN == 0 and
 		_movementSpeed.y != 0):
 		var newMovementSpeed = _movementSpeed
 		var signY = sign(newMovementSpeed.y)
-		newMovementSpeed.y -= signY * _deceleration.y
+		newMovementSpeed.y -= signY * _deceleration.y * delta
+		
 		if (sign(newMovementSpeed.y) != signY):
 			newMovementSpeed.y = 0
-		_setMovementSpeed(newMovementSpeed)
 		
+		_setMovementSpeed(newMovementSpeed)
 
 func _updatePosition(delta):
 	translate(_movementSpeed * delta)
