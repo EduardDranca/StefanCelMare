@@ -1,60 +1,14 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=2]
 
 [ext_resource path="res://src/Characters/Stefan/Stefan.tscn" type="PackedScene" id=1]
-
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 32, 32 )
 
 [node name="Node2D" type="Node2D"]
 
 [node name="KinematicBody2D" parent="." instance=ExtResource( 1 )]
+z_index = 1
+z_as_relative = false
 
 [node name="Sprite" parent="KinematicBody2D" index="1"]
 frame = 16
-
-[node name="KinematicBody2D2" type="KinematicBody2D" parent="."]
-position = Vector2( 321, 110 )
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="KinematicBody2D2"]
-shape = SubResource( 1 )
-
-[node name="KinematicBody2D3" type="KinematicBody2D" parent="."]
-position = Vector2( 318, 260 )
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="KinematicBody2D3"]
-shape = SubResource( 1 )
-
-[node name="KinematicBody2D4" type="KinematicBody2D" parent="."]
-position = Vector2( 514, 210 )
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="KinematicBody2D4"]
-shape = SubResource( 1 )
-
-[node name="KinematicBody2D5" type="KinematicBody2D" parent="."]
-position = Vector2( 479, 328 )
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="KinematicBody2D5"]
-shape = SubResource( 1 )
-
-[node name="KinematicBody2D6" type="KinematicBody2D" parent="."]
-position = Vector2( 472, 80 )
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="KinematicBody2D6"]
-shape = SubResource( 1 )
 
 [editable path="KinematicBody2D"]

@@ -1,4 +1,5 @@
 extends "res://src/Weapons/Weapon.gd"
 
-func _ready():
-	pass
+
+func _process(delta):
+	updateRotation()

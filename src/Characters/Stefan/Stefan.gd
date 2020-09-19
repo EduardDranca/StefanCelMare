@@ -5,14 +5,16 @@ var _swordPackedScene = _weaponDictionary.get("sword")
 var _weapon = _swordPackedScene.instance()
 
 func _ready():
-	_weapon._setDamage(100)
-	_weapon.connect("attacked", self, "_getHit")
+	_weapon.setDamage(100)
+	_weapon.connect("attacked", self, "attack")
 	add_child(_weapon)
 
-func _getHit(hitArea, damage):
-	for overlappingBody in hitArea.get_overlapping_bodies():
-		print(overlappingBody)
-	print(damage)
+func attack(hitArea, damage):
+	pass
+
+func setTarget(target):
+	.setTarget(target)
+	_weapon.setTarget(target)
 
 func _input(event):
 	var newMovementSpeed = _movementSpeed;
@@ -30,7 +32,7 @@ func _input(event):
 		newMovementSpeed.x = 250
 		
 	if (event.is_action_pressed("attack")):
-		_weapon._attack()
+		_weapon.attack()
 		
 	if (event.is_action_released("move_up")):
 		_movementMask &= ~MovementMaskValues.UP
@@ -41,9 +43,9 @@ func _input(event):
 	if (event.is_action_released("move_right")):
 		_movementMask &= ~MovementMaskValues.RIGHT
 		
-	._setMovementSpeed(newMovementSpeed)
+	.setMovementSpeed(newMovementSpeed)
 
-func _updateAnimation():
+func updateAnimation():
 	if (_orientation == Orientation.LEFT):
 		get_node("Sprite").flip_h = true
 	elif (_orientation == Orientation.RIGHT):
@@ -57,5 +59,5 @@ func _process(delta):
 	var target = get_global_mouse_position() - position
 	
 	._process(delta)
-	._setTarget(target)
-	_updateAnimation()
+	setTarget(target)
+	updateAnimation()

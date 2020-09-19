@@ -38,7 +38,7 @@ var _deceleration = Vector2(2000, 2000)
 
 func _ready():
 	pass
-func _updateSpeed(delta):
+func updateSpeed(delta):
 	if (_movementMask & MovementMaskValues.LEFT == 0 and
 		_movementMask & MovementMaskValues.RIGHT == 0 and
 		_movementSpeed.x != 0):
@@ -49,7 +49,7 @@ func _updateSpeed(delta):
 		if (sign(newMovementSpeed.x) != signX):
 			newMovementSpeed.x = 0
 		
-		_setMovementSpeed(newMovementSpeed)
+		setMovementSpeed(newMovementSpeed)
 	if (_movementMask & MovementMaskValues.UP == 0 and
 		_movementMask & MovementMaskValues.DOWN == 0 and
 		_movementSpeed.y != 0):
@@ -60,12 +60,12 @@ func _updateSpeed(delta):
 		if (sign(newMovementSpeed.y) != signY):
 			newMovementSpeed.y = 0
 		
-		_setMovementSpeed(newMovementSpeed)
+		setMovementSpeed(newMovementSpeed)
 
-func _updatePosition(delta):
+func updatePosition(delta):
 	translate(_movementSpeed * delta)
 
-func _calculateOrientation():
+func calculateOrientation():
 	if (abs(_target.x) < abs(_target.y)):
 		if _target.y < 0:
 			_orientation = Orientation.UP
@@ -77,7 +77,7 @@ func _calculateOrientation():
 		else:
 			_orientation = Orientation.RIGHT
 
-func _setMovementSpeed(movementSpeed):
+func setMovementSpeed(movementSpeed):
 	_movementSpeed = movementSpeed
 	if (_movementSpeed.is_equal_approx(Vector2(0, 0))):
 		_movementSpeed = Vector2(0, 0)
@@ -85,10 +85,10 @@ func _setMovementSpeed(movementSpeed):
 	else:
 		_isMoving = true
 
-func _setTarget(target):
+func setTarget(target):
 	_target = target
-	_calculateOrientation()
+	calculateOrientation()
 
 func _process(delta):
-	_updatePosition(delta)
-	_updateSpeed(delta)
+	updatePosition(delta)
+	updateSpeed(delta)
