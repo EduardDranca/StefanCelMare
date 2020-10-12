@@ -29,12 +29,46 @@ const idleAnimationDictionary = {
 	Orientation.LEFT: "idle_right"
 }
 
+const deathAnimation = "death"
+
+const _hitAnimationTotalTime = 0.15
+var _hitAnimationTime = 0.0
+var _isHit = false
+
+export(bool) var _hittable = false
+export(int) var _hitPoints = 0
+var _kill = false
+var _isDead = false
 var _movementMask = 0
 var _isMoving = false
 var _orientation = Orientation.RIGHT
+
 var _movementSpeed = Vector2()
-var _target = Vector2()
 var _deceleration = Vector2(2000, 2000)
+
+var _target = Vector2()
+
+onready var AnimationPlayer = $AnimationPlayer
+onready var CharacterSprite = $Sprite
+
+func _ready():
+	var mat = CharacterSprite.get_material().duplicate(true)
+	CharacterSprite.set_material(mat)
+	if (_hittable):
+		CharacterSprite.material.set_shader_param("hitAnimationTotalTime", _hitAnimationTotalTime)
+	AnimationPlayer.connect("animation_finished", self, "checkAnimationStop")
+
+func checkAnimationStop(animationName):
+	if (animationName == deathAnimation):
+		queue_free()
+
+func hit(damage):
+	if (_hittable):
+		_isHit = true
+		_hitPoints -= damage
+		if (_hitPoints <= 0):
+			_kill = true
+			_hitPoints = 0
 
 func updateSpeed(delta):
 	if (_movementMask & MovementMaskValues.LEFT == 0 and
@@ -75,6 +109,19 @@ func calculateOrientation():
 		else:
 			_orientation = Orientation.RIGHT
 
+func updateMovementMask(movementSpeed):
+	if (movementSpeed.x > 0):
+		_movementMask |= MovementMaskValues.RIGHT
+	elif (movementSpeed.x < 0):
+		_movementMask |= MovementMaskValues.LEFT
+	if (movementSpeed.y > 0):
+		_movementMask |= MovementMaskValues.DOWN
+	elif (movementSpeed.y < 0):
+		_movementMask |= MovementMaskValues.UP
+
+func clearMovementMask():
+	_movementMask = 0
+
 func setMovementSpeed(movementSpeed):
 	_movementSpeed = movementSpeed
 	if (_movementSpeed.is_equal_approx(Vector2(0, 0))):
@@ -89,14 +136,37 @@ func setTarget(target):
 
 func updateAnimation():
 	if (_orientation == Orientation.LEFT):
-		get_node("Sprite").flip_h = true
+		CharacterSprite.flip_h = true
 	elif (_orientation == Orientation.RIGHT):
-		get_node("Sprite").flip_h = false
+		CharacterSprite.flip_h = false
 	if (_isMoving):
-		get_node("AnimationPlayer").play(moveAnimationDictionary.get(_orientation))
+		AnimationPlayer.play(moveAnimationDictionary.get(_orientation))
 	else:
-		get_node("AnimationPlayer").play(idleAnimationDictionary.get(_orientation))
+		AnimationPlayer.play(idleAnimationDictionary.get(_orientation))
+
+func checkIfDead():
+	if (_kill):
+		if (AnimationPlayer.has_animation(deathAnimation)):
+			AnimationPlayer.play(deathAnimation)
+		else:
+			queue_free()
+		return true
+	return false
+
+func updateHitMaterial(delta):
+	_hitAnimationTime += delta
+	if (_hitAnimationTime >= _hitAnimationTotalTime):
+		_hitAnimationTime = 0
+		_isHit = false
+	CharacterSprite.material.set_shader_param("hitAnimationTime", _hitAnimationTime)
 
 func _process(delta):
+	if (_isHit):
+		updateHitMaterial(delta)
+	if (!_isDead):
+		_isDead = checkIfDead()
+	if (_isDead):
+		return
 	updatePosition(delta)
 	updateSpeed(delta)
+	updateAnimation()

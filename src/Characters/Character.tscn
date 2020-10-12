@@ -1,8 +1,27 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://src/Characters/Character.gd" type="Script" id=1]
 [ext_resource path="res://res/Characters/Shadow.png" type="Texture" id=2]
 [ext_resource path="res://src/Characters/Shadow.gd" type="Script" id=3]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+uniform float hitAnimationTotalTime;
+uniform float hitAnimationTime = 0.0;
+
+void fragment() {
+	COLOR = texture(TEXTURE, UV);
+	COLOR.r = COLOR.r + hitAnimationTime / hitAnimationTotalTime * (1.f - COLOR.r);
+	COLOR.g = COLOR.g + hitAnimationTime / hitAnimationTotalTime * (1.f - COLOR.g);
+	COLOR.b = COLOR.b + hitAnimationTime / hitAnimationTotalTime * (1.f - COLOR.b);
+}"
+custom_defines = ""
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+shader_param/hitAnimationTotalTime = null
+shader_param/hitAnimationTime = 0.0
 
 [node name="KinematicBody2D" type="KinematicBody2D"]
 script = ExtResource( 1 )
@@ -10,6 +29,7 @@ script = ExtResource( 1 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 
 [node name="Sprite" type="Sprite" parent="."]
+material = SubResource( 2 )
 scale = Vector2( 2, 2 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

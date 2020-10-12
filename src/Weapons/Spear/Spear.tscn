@@ -5,7 +5,7 @@
 [ext_resource path="res://src/Weapons/Spear/Spear.gd" type="Script" id=3]
 [ext_resource path="res://res/Weapons/Spear/SpearAttack.png" type="Texture" id=4]
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id=1]
 resource_name = "attack"
 length = 0.15
 step = 0.075
@@ -22,11 +22,12 @@ tracks/0/keys = {
 "values": [ 0, 1 ]
 }
 
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 40, 20 )
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 60, 30 )
 
 [node name="Node2D" instance=ExtResource( 1 )]
 script = ExtResource( 3 )
+_damage = 1
 
 [node name="WeaponSprite" parent="." index="0"]
 rotation = 1.5708
@@ -35,11 +36,11 @@ texture = ExtResource( 2 )
 offset = Vector2( 0.5, -10 )
 
 [node name="AnimationPlayer" parent="." index="1"]
-anims/attack = SubResource( 2 )
+anims/attack = SubResource( 1 )
 
 [node name="CollisionShape2D" parent="HitArea" index="0"]
 position = Vector2( 60, 0 )
-shape = SubResource( 1 )
+shape = SubResource( 2 )
 
 [node name="AttackSprite" parent="." index="3"]
 position = Vector2( 90, 0 )

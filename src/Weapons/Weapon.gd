@@ -2,12 +2,10 @@ extends Node2D
 
 signal attacked(hitArea, damage)
 
-export(int) var _baseDamage
-
 const alpha = 0.6
 
 var _target
-var _damage
+export(int) var _damage
 var _parentZIndex
 var _isAttacking
 var _attackAnimationDuration

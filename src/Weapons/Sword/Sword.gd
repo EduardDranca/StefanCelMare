@@ -4,7 +4,6 @@ var _flipRotation = false
 var _swordRotation = 0
 
 func _ready():
-	._ready()
 	$AnimationPlayer.connect("animation_finished", self, "flipRotation")
 
 func _process(delta):

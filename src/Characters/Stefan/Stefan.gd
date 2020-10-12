@@ -1,17 +1,21 @@
 extends "res://src/Characters/Character.gd"
 
 var _weaponDictionary = WeaponPathDictionary.weaponScenesDictionary
-var _swordPackedScene = _weaponDictionary.get("sword")
-var _spearPackedScene = _weaponDictionary.get("spear")
-var _weapon = _spearPackedScene.instance()
+var _swordScene = _weaponDictionary.get("sword")
+var _weapon = _swordScene.instance()
+const MAX_SPEED = 250
+
+signal moved(position)
 
 func _ready():
-	_weapon.setDamage(100)
-	_weapon.connect("attacked", self, "attack")
 	add_child(_weapon)
+	_weapon.connect("attacked", self, "attack")
 
-func attack(hitArea, damage):
-	pass
+func attack(hitBox, damage):
+	for intersectingBody in hitBox.get_overlapping_bodies():
+		if (intersectingBody.is_in_group("enemies")):
+			var enemy = intersectingBody
+			enemy.hit(damage)
 
 func setTarget(target):
 	.setTarget(target)
@@ -20,17 +24,17 @@ func setTarget(target):
 func _input(event):
 	var newMovementSpeed = _movementSpeed;
 	if (event.is_action_pressed("move_up")):
+		newMovementSpeed.y = -MAX_SPEED
 		_movementMask |= MovementMaskValues.UP
-		newMovementSpeed.y = -250
 	if (event.is_action_pressed("move_down")):
+		newMovementSpeed.y = MAX_SPEED
 		_movementMask |= MovementMaskValues.DOWN
-		newMovementSpeed.y = 250
 	if (event.is_action_pressed("move_left")):
+		newMovementSpeed.x = -MAX_SPEED
 		_movementMask |= MovementMaskValues.LEFT
-		newMovementSpeed.x = -250
 	if (event.is_action_pressed("move_right")):
+		newMovementSpeed.x = MAX_SPEED
 		_movementMask |= MovementMaskValues.RIGHT
-		newMovementSpeed.x = 250
 		
 	if (event.is_action_pressed("attack")):
 		_weapon.attack()
@@ -48,7 +52,8 @@ func _input(event):
 
 func _process(delta):
 	var target = get_global_mouse_position()
-	
+	var oldPosition = position
 	._process(delta)
+	if (position != oldPosition):
+		emit_signal("moved", position)
 	setTarget(target)
-	updateAnimation()
