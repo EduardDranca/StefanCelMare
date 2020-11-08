@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://src/basic.tmx" type="PackedScene" id=1]
+[ext_resource path="res://src/Characters/Stefan/Stefan.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/Characters/Otoman/Otoman.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/Scenes/TestScene.gd" type="Script" id=4]
+
+[node name="map" instance=ExtResource( 1 )]
+script = ExtResource( 4 )
+
+[node name="Tile Layer 1" parent="." index="0"]
+position = Vector2( 0, 32 )
+scale = Vector2( 2, 2 )
+z_index = -1
+
+[node name="Stefan" parent="." index="1" instance=ExtResource( 2 )]
+position = Vector2( 307.607, 181.745 )
+
+[node name="Camera2D" type="Camera2D" parent="Stefan" index="4"]
+current = true
+zoom = Vector2( 0.6, 0.6 )
+smoothing_enabled = true
+
+[node name="Otoman" parent="." index="2" instance=ExtResource( 3 )]
+
+[editable path="Stefan"]

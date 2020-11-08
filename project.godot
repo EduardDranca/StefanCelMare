@@ -10,19 +10,47 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "Reference",
-"class": "WeaponPathDictionary",
+"class": "EnemyDictionary",
 "language": "GDScript",
-"path": "res://src/Weapons/WeaponPathDictionary.gd"
+"path": "res://src/Characters/EnemyDictionary.gd"
+}, {
+"base": "OtomanAIState",
+"class": "ExploreAIState",
+"language": "GDScript",
+"path": "res://src/Characters/Otoman/AI/ExploreAIState.gd"
+}, {
+"base": "OtomanAIState",
+"class": "FollowAIState",
+"language": "GDScript",
+"path": "res://src/Characters/Otoman/AI/FollowAIState.gd"
+}, {
+"base": "Reference",
+"class": "OtomanAIState",
+"language": "GDScript",
+"path": "res://src/Characters/Otoman/AI/OtomanAIState.gd"
+}, {
+"base": "Reference",
+"class": "WeaponSceneDictionary",
+"language": "GDScript",
+"path": "res://src/Weapons/WeaponSceneDictionary.gd"
 } ]
 _global_script_class_icons={
-"WeaponPathDictionary": ""
+"EnemyDictionary": "",
+"ExploreAIState": "",
+"FollowAIState": "",
+"OtomanAIState": "",
+"WeaponSceneDictionary": ""
 }
 
 [application]
 
 config/name="StefanCelMare"
-run/main_scene="res://src/Scenes/TestScene.tscn"
+run/main_scene="res://src/Scenes/map.tscn"
 config/icon="res://icon.png"
+
+[editor_plugins]
+
+enabled=PoolStringArray( "vnen.tiled_importer" )
 
 [input]
 
@@ -60,3 +88,7 @@ attack={
 [rendering]
 
 environment/default_environment="res://default_env.tres"
+
+[tiled_importer]
+
+enable_json_format=true

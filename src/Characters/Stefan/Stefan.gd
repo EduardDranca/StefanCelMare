@@ -1,13 +1,14 @@
 extends "res://src/Characters/Character.gd"
 
-var _weaponDictionary = WeaponPathDictionary.weaponScenesDictionary
+var _weaponDictionary = WeaponSceneDictionary.weaponSceneDictionary
 var _swordScene = _weaponDictionary.get("sword")
 var _weapon = _swordScene.instance()
-const MAX_SPEED = 250
+const MAX_SPEED = 50
 
 signal moved(position)
 
 func _ready():
+	emit_signal("moved", position)
 	add_child(_weapon)
 	_weapon.connect("attacked", self, "attack")
 
@@ -51,7 +52,7 @@ func _input(event):
 	.setMovementSpeed(newMovementSpeed)
 
 func _process(delta):
-	var target = get_global_mouse_position()
+	var target = get_viewport().get_mouse_position()
 	var oldPosition = position
 	._process(delta)
 	if (position != oldPosition):

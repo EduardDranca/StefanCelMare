@@ -1,8 +1,9 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://src/Characters/Character.tscn" type="PackedScene" id=1]
 [ext_resource path="res://res/Characters/Otoman/Otoman.png" type="Texture" id=2]
 [ext_resource path="res://src/Characters/Otoman/Otoman.gd" type="Script" id=3]
+[ext_resource path="res://src/Characters/Otoman/AI/OtomanAISystem.tscn" type="PackedScene" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 16, 30 )
@@ -125,3 +126,5 @@ anims/walk_up = SubResource( 7 )
 [node name="Shadow" parent="." index="3"]
 position = Vector2( 0, 30 )
 z_index = -1
+
+[node name="OtomanAISystem" parent="." index="4" instance=ExtResource( 4 )]
