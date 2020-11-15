@@ -8,6 +8,8 @@ var _enemySpawn = _enemyDictionary.get(_spawn)
 onready var _parent = get_parent()
 onready var _timer = $Timer
 
+signal spawned(spawnedInstance)
+
 func _ready():
 	_timer.set_wait_time(_spawnTime)
 	_timer.set_one_shot(false)
@@ -18,3 +20,4 @@ func spawn():
 	var newEnemy = _enemySpawn.instance()
 	newEnemy.position = position
 	_parent.add_child(newEnemy)
+	emit_signal("spawned", newEnemy)

@@ -32,31 +32,30 @@ func checkBodyInAttackRange(body):
 	if (body.is_in_group("player")):
 		_playerInAttackRange = !_playerInAttackRange
 
-func updatePlayerPosition(position):
-	_playerPosition = position
+func updatePlayerPosition(playerPosition):
+	_playerPosition = playerPosition
+	setTarget(_playerPosition)
 	AI.updatePlayerPosition(_playerPosition)
 
 func moveTo(moveToPosition, speed):
 	_movingTo = true
 	_destination = moveToPosition
 	speed = clamp(speed, 0, MAX_SPEED)
-	setMovementSpeed((moveToPosition - self.position).normalized() * speed)
+	setMovementSpeed((moveToPosition - position).normalized() * speed)
 	updateMovementMask(_movementSpeed)
 
 func setTarget(target):
 	.setTarget(target)
-	_weapon.setTarget(target)
+	_weapon.setTarget(_target)
 
 func checkMoveTo():
 	if ((_destination - position).length_squared() <= 40 and _movingTo):
 		_movingTo = false
-		position = _destination
 		setMovementSpeed(Vector2(0, 0))
 		updateMovementMask(_movementSpeed)
 		emit_signal("moveToFinished", position)
 
 func _process(delta):
 	._process(delta)
-	setTarget(_playerPosition)
 	checkMoveTo()
 	AI.updateAI(delta)

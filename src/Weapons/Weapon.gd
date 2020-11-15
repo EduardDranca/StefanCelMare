@@ -4,7 +4,7 @@ signal attacked(hitArea, damage)
 
 const alpha = 0.6
 
-var _target
+var _target = Vector2(0, 0)
 export(int) var _damage
 var _parentZIndex
 var _isAttacking
@@ -20,7 +20,7 @@ func setDamage(damage):
 	_damage = damage
 
 func setTarget(target):
-	_target = target - $WeaponSprite.get_global_transform_with_canvas().get_origin()
+	_target = target
 
 func stopAnimation(animationName):
 	if (animationName == "attack"):

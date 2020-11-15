@@ -26,6 +26,7 @@ tracks/0/keys = {
 extents = Vector2( 60, 30 )
 
 [node name="Node2D" instance=ExtResource( 1 )]
+rotation = -1.5708
 script = ExtResource( 3 )
 _damage = 1
 

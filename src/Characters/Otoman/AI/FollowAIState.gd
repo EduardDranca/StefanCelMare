@@ -2,7 +2,7 @@ extends OtomanAIState
 
 class_name FollowAIState
 
-var _speed = 20
+var _speed = 10
 
 func update(delta):
 	_target.setTarget(_playerPosition)

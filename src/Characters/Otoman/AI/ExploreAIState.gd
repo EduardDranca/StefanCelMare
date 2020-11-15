@@ -13,7 +13,7 @@ var _idle = false
 var _isMoving = false
 var _idleTimer = 0
 var _idleTime = 0
-var _speed = 100
+var _speed = 10
 var _nextState = self
 
 func _init():
@@ -30,6 +30,7 @@ func moveTargetToRandom():
 		var yCoeff = _rng.randf_range(-1, 1)
 		var moveDelta = Vector2(xCoeff * MAX_MOVE_DISTANCE, yCoeff * MAX_MOVE_DISTANCE);
 		_destination = _target.position + moveDelta
+		_target.setTarget(_destination)
 		_target.moveTo(_destination, _speed)
 
 func updateIdleTimer(delta):
@@ -39,7 +40,7 @@ func updateIdleTimer(delta):
 		_idle = false
 
 func update(delta):
-	if ((_target.position - _playerPosition).length_squared() <= _visibleRange * _visibleRange):
+	if (_playerPositionInitialized and (_target.position - _playerPosition).length_squared() <= _visibleRange * _visibleRange):
 		return FollowAIState
 	if (!_idle and !_isMoving):
 		moveTargetToRandom()

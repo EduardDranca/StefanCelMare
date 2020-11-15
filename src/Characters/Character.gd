@@ -131,7 +131,7 @@ func setMovementSpeed(movementSpeed):
 		_isMoving = true
 
 func setTarget(target):
-	_target = target - get_global_transform_with_canvas().get_origin()
+	_target = target - position
 	calculateOrientation()
 
 func updateAnimation():
@@ -159,6 +159,9 @@ func updateHitMaterial(delta):
 		_hitAnimationTime = 0
 		_isHit = false
 	CharacterSprite.material.set_shader_param("hitAnimationTime", _hitAnimationTime)
+
+func getGlobalPosition():
+	return get_global_transform_with_canvas().get_origin() 
 
 func _process(delta):
 	if (_isHit):
