@@ -22,7 +22,5 @@ zoom = Vector2( 0.6, 0.6 )
 smoothing_enabled = true
 
 [node name="Spawner" parent="." index="2" instance=ExtResource( 3 )]
-position = Vector2( 162.327, 99.8934 )
-_spawnTime = 5.0
 
 [editable path="Stefan"]

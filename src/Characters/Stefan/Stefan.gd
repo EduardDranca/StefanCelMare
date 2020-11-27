@@ -52,13 +52,8 @@ func _input(event):
 
 func _process(delta):
 	var target = get_global_mouse_position()
-	print("target: ")
-	print(target)
-	print("position: ")
-	print(position)
 	var oldPosition = position
 	._process(delta)
 	if (position != oldPosition):
-		print("emit moved")
 		emit_signal("moved", position)
 	setTarget(target)

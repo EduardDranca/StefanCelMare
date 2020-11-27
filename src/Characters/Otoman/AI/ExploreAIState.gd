@@ -2,22 +2,21 @@ extends OtomanAIState
 
 class_name ExploreAIState
 
-const FollowAIState = preload("res://src/Characters/Otoman/AI/FollowAIState.gd")
 const SIN_45 = 0.70710678118
 const MAX_MOVE_DISTANCE = 400 * SIN_45
 const MAX_IDLE_TIME = 10
 const MIN_IDLE_TIME = 5
-var _rng = RandomNumberGenerator.new()
 var _destination = Vector2(0, 0)
 var _idle = false
 var _isMoving = false
 var _idleTimer = 0
 var _idleTime = 0
-var _speed = 10
+var _speed = 150
 var _nextState = self
 
 func _init():
-	_rng.seed = OS.get_unix_time()
+	._init()
+	_currentState = EXPLORE_STATE
 	_idleTime = _rng.randf_range(MIN_IDLE_TIME, MAX_IDLE_TIME)
 
 func setTarget(target):
@@ -41,14 +40,12 @@ func updateIdleTimer(delta):
 
 func update(delta):
 	if (_playerPositionInitialized and (_target.position - _playerPosition).length_squared() <= _visibleRange * _visibleRange):
-		return FollowAIState
+		return FOLLOW_STATE
 	if (!_idle and !_isMoving):
 		moveTargetToRandom()
 	else:
 		updateIdleTimer(delta)
-	return null
-	# TODO: check if the player got in visible range -> switch to follow state
-	#			  if the player got in attack range -> switch to attack state 
+	return _currentState
 
 func onMoveToFinished(position):
 	_isMoving = false
