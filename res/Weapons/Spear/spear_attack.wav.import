@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/spear_attack.wav-2bfdcbb9d937749adfa66a910d357f2e.sample"
+
+[deps]
+
+source_file="res://res/Weapons/Spear/spear_attack.wav"
+dest_files=[ "res://.import/spear_attack.wav-2bfdcbb9d937749adfa66a910d357f2e.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
