@@ -6,7 +6,7 @@
 [ext_resource path="res://src/Characters/Otoman/AI/OtomanAISystem.tscn" type="PackedScene" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 16, 30 )
+extents = Vector2( 14, 8 )
 
 [sub_resource type="Animation" id=2]
 length = 0.4
@@ -107,6 +107,7 @@ _hittable = true
 _hitPoints = 4
 
 [node name="CollisionShape2D" parent="." index="0"]
+position = Vector2( 0, 30 )
 shape = SubResource( 1 )
 
 [node name="Sprite" parent="." index="1"]
@@ -128,7 +129,3 @@ position = Vector2( 0, 30 )
 z_index = -1
 
 [node name="OtomanAISystem" parent="." index="4" instance=ExtResource( 4 )]
-
-[node name="Line2D" type="Line2D" parent="." index="5"]
-points = PoolVector2Array( 0, 0, 0, 0 )
-width = 2.0

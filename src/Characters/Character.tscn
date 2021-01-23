@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://src/Characters/Character.gd" type="Script" id=1]
 [ext_resource path="res://res/Characters/Shadow.png" type="Texture" id=2]
 [ext_resource path="res://src/Characters/Shadow.gd" type="Script" id=3]
+[ext_resource path="res://src/Characters/HPBar.tscn" type="PackedScene" id=4]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
@@ -38,3 +39,6 @@ scale = Vector2( 2, 2 )
 scale = Vector2( 2, 2 )
 texture = ExtResource( 2 )
 script = ExtResource( 3 )
+
+[node name="HPBar" parent="." instance=ExtResource( 4 )]
+position = Vector2( 0, -50 )

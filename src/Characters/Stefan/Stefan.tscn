@@ -5,7 +5,7 @@
 [ext_resource path="res://res/Characters/Stefan/Stefan.png" type="Texture" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 16, 27 )
+extents = Vector2( 14, 8 )
 
 [sub_resource type="Animation" id=2]
 length = 0.4
@@ -111,7 +111,7 @@ _hittable = true
 _hitPoints = 10
 
 [node name="CollisionShape2D" parent="." index="0"]
-position = Vector2( 0, 3 )
+position = Vector2( 0, 30 )
 shape = SubResource( 1 )
 
 [node name="Sprite" parent="." index="1"]
@@ -131,3 +131,8 @@ anims/walk_up = SubResource( 7 )
 [node name="Shadow" parent="." index="3"]
 position = Vector2( 0, 30 )
 z_index = -1
+
+[node name="Camera2D" type="Camera2D" parent="." index="4"]
+current = true
+zoom = Vector2( 0.6, 0.6 )
+smoothing_enabled = true

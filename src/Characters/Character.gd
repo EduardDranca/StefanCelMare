@@ -37,6 +37,7 @@ var _isHit = false
 
 export(bool) var _hittable = false
 export(int) var _hitPoints = 0
+var _currentHitPoints
 var _kill = false
 var _isDead = false
 var _movementMask = 0
@@ -52,8 +53,11 @@ onready var AnimationPlayer = $AnimationPlayer
 onready var CharacterSprite = $Sprite
 
 func _ready():
+	_currentHitPoints = _hitPoints
 	var mat = CharacterSprite.get_material().duplicate(true)
 	CharacterSprite.set_material(mat)
+	mat = $HPBar.get_material().duplicate(true)
+	$HPBar.set_material(mat)
 	if (_hittable):
 		CharacterSprite.material.set_shader_param("hitAnimationTotalTime", _hitAnimationTotalTime)
 	AnimationPlayer.connect("animation_finished", self, "checkAnimationStop")
@@ -65,10 +69,12 @@ func checkAnimationStop(animationName):
 func hit(damage):
 	if (_hittable):
 		_isHit = true
-		_hitPoints -= damage
-		if (_hitPoints <= 0):
+		_currentHitPoints -= damage
+		$HPBar.setRatio(float(_currentHitPoints) / _hitPoints)
+		$HPBar.display()
+		if (_currentHitPoints <= 0):
 			_kill = true
-			_hitPoints = 0
+			_currentHitPoints = 0
 
 func updateSpeed(delta):
 	if (_movementMask & MovementMaskValues.LEFT == 0 and
@@ -94,8 +100,8 @@ func updateSpeed(delta):
 		
 		setMovementSpeed(newMovementSpeed)
 
-func updatePosition(delta):
-	translate(_movementSpeed * delta)
+func updatePosition():
+	move_and_slide(_movementSpeed)
 
 func calculateOrientation():
 	if (abs(_target.x) < abs(_target.y)):
@@ -170,6 +176,6 @@ func _process(delta):
 		_isDead = checkIfDead()
 	if (_isDead):
 		return
-	updatePosition(delta)
+	updatePosition()
 	updateSpeed(delta)
 	updateAnimation()
