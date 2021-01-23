@@ -1,9 +1,12 @@
 extends "res://src/Weapons/Weapon.gd"
 
+
 var _flipRotation = false
 var _swordRotation = 0
 
 func _ready():
+	_attackSound = "sword_attack"
+	_hitSound = "sword_hit"
 	$AnimationPlayer.connect("animation_finished", self, "flipRotation")
 
 func _process(delta):

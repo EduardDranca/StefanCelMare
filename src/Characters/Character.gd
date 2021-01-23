@@ -52,6 +52,8 @@ var _target = Vector2()
 onready var AnimationPlayer = $AnimationPlayer
 onready var CharacterSprite = $Sprite
 
+signal requestSound(sound, position)
+
 func _ready():
 	_currentHitPoints = _hitPoints
 	var mat = CharacterSprite.get_material().duplicate(true)
@@ -166,9 +168,13 @@ func updateHitMaterial(delta):
 		_isHit = false
 	CharacterSprite.material.set_shader_param("hitAnimationTime", _hitAnimationTime)
 
-func getGlobalPosition():
-	return get_global_transform_with_canvas().get_origin() 
+#func getGlobalPosition():
+#	return get_global_transform_with_canvas().get_origin() 
 
+# the soundPosition is the position of the sound relative to the character
+func playSound(sound, soundPosition):
+	emit_signal("requestSound", sound, position + soundPosition)
+	
 func _process(delta):
 	if (_isHit):
 		updateHitMaterial(delta)

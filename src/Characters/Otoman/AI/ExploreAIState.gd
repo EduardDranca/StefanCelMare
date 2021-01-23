@@ -47,6 +47,6 @@ func update(delta):
 		updateIdleTimer(delta)
 	return _currentState
 
-func onMoveToFinished(position):
+func onMoveToFinished():
 	_isMoving = false
 	_idle = true

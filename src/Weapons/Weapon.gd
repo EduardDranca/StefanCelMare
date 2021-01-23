@@ -1,10 +1,14 @@
 extends Node2D
 
-signal attacked(hitArea, damage)
+signal requestSound(sound, position)
 
 const alpha = 0.6
 
+var _attackSound = ""
+var _hitSound = ""
+
 var _target = Vector2(0, 0)
+var _enemyGroup = "enemies"
 export(int) var _damage
 var _parentZIndex
 var _isAttacking
@@ -21,6 +25,9 @@ func setDamage(damage):
 
 func setTarget(target):
 	_target = target
+
+func setEnemyGroup(enemyGroup):
+	_enemyGroup = enemyGroup
 
 func stopAnimation(animationName):
 	if (animationName == "attack"):
@@ -49,8 +56,18 @@ func updateRotation():
 	rotation = Vector2(1, 0).angle_to(_target);
 
 func attack():
-	emit_signal("attacked", $HitArea, _damage)
+	emit_signal("requestSound", _attackSound, position)
 	if ($AnimationPlayer.has_animation("attack")):
 		_isAttacking = true;
 		$AttackSprite.visible = true
 		$AnimationPlayer.play("attack")
+	
+	var hit = false
+	for intersectingBody in $HitArea.get_overlapping_bodies():
+		if (intersectingBody.is_in_group(_enemyGroup)):
+			hit = true
+			var enemy = intersectingBody
+			enemy.hit(_damage)
+			
+	if (hit):
+		emit_signal("requestSound", _hitSound, position)

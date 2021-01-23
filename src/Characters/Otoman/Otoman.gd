@@ -5,32 +5,27 @@ var _spearScene = _weaponDictionary.get("spear")
 var _weapon = _spearScene.instance()
 var _playerPosition = Vector2(200, 200)
 var _playerPositionIsSet = false
-var _playerInAttackRange = false
 var _movingTo = false
 var _destination = Vector2(0, 0)
 
+const enemyGroup = "player"
 const MAX_SPEED = 200
 const MAX_DISTANCE = 500
 
 onready var AI = $OtomanAISystem
 
-signal moveToFinished(position)
+signal moveToFinished
 
 func _ready():
 	add_child(_weapon)
 	AI.setTarget(self)
-	_weapon.connect("attacked", self, "attack")
-	_weapon.get_node("HitArea").connect("body_entered", self, "checkBodyInAttackRange")
-	_weapon.get_node("HitArea").connect("body_exited", self, "checkBodyInAttackRange")
+	_weapon.connect("requestSound", self, "playSound")
+	_weapon.setEnemyGroup(enemyGroup)
 
-func attack(hitBox, damage):
-	for overlappingBody in hitBox.get_overlapping_bodies():
-		if (overlappingBody.is_in_group("player")):
-			overlappingBody.hit(damage)
-
-func checkBodyInAttackRange(body):
-	if (body.is_in_group("player")):
-		_playerInAttackRange = !_playerInAttackRange
+#func attack(hitBox, damage):
+#	for overlappingBody in hitBox.get_overlapping_bodies():
+#		if (overlappingBody.is_in_group("player")):
+#			overlappingBody.hit(damage)
 
 func updatePlayerPosition(playerPosition):
 	_playerPosition = playerPosition
@@ -53,7 +48,7 @@ func checkMoveTo():
 		_movingTo = false
 		setMovementSpeed(Vector2(0, 0))
 		updateMovementMask(_movementSpeed)
-		emit_signal("moveToFinished", position)
+		emit_signal("moveToFinished")
 
 func _process(delta):
 	._process(delta)

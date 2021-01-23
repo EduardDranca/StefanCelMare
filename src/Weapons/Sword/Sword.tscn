@@ -6,7 +6,6 @@
 [ext_resource path="res://res/Weapons/Sword/SwordAttack.png" type="Texture" id=4]
 
 [sub_resource type="Animation" id=1]
-resource_name = "attack"
 length = 0.15
 step = 0.075
 tracks/0/type = "value"

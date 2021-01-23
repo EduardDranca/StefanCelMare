@@ -7,15 +7,12 @@ const MAX_SPEED = 200
 
 signal moved(position)
 
+const enemyGroup = "enemies"
+
 func _ready():
 	add_child(_weapon)
-	_weapon.connect("attacked", self, "attack")
-
-func attack(hitBox, damage):
-	for intersectingBody in hitBox.get_overlapping_bodies():
-		if (intersectingBody.is_in_group("enemies")):
-			var enemy = intersectingBody
-			enemy.hit(damage)
+	_weapon.setEnemyGroup(enemyGroup)
+	_weapon.connect("requestSound", self, "playSound")
 
 func setTarget(target):
 	.setTarget(target)
@@ -49,6 +46,8 @@ func _input(event):
 		_movementMask &= ~MovementMaskValues.RIGHT
 		
 	.setMovementSpeed(newMovementSpeed)
+
+	
 
 func _process(delta):
 	var target = get_global_mouse_position()

@@ -8,9 +8,9 @@ var _attackRange
 func _init():
 	._init()
 	_currentState = FOLLOW_STATE
-	_attackRange = _rng.randf_range(_minAttackRange, _maxAttackRange)
 
-func update(delta):
+func update(_delta):
+	_attackRange = _rng.randf_range(_minAttackRange, _maxAttackRange)
 	var deltaPosition = (_target.position - _playerPosition).normalized() * _attackRange
 	_target.setTarget(_playerPosition)
 	_target.moveTo(_playerPosition + deltaPosition, _speed)

@@ -10,6 +10,8 @@ func _process(delta):
 		updateAnimation(delta)
 
 func _ready():
+	_attackSound = "spear_attack"
+	_hitSound = "spear_hit"
 	$AnimationPlayer.connect("animation_finished", self, "resetTimer")
 
 func resetTimer(animationName):
