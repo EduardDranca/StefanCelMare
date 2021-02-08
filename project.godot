@@ -48,10 +48,6 @@ config/name="StefanCelMare"
 run/main_scene="res://src/Scenes/FinalScene.tscn"
 config/icon="res://icon.png"
 
-[editor_plugins]
-
-enabled=PoolStringArray( "vnen.tiled_importer" )
-
 [input]
 
 move_up={
@@ -88,7 +84,3 @@ attack={
 [rendering]
 
 environment/default_environment="res://default_env.tres"
-
-[tiled_importer]
-
-enable_json_format=true

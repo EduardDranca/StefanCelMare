@@ -7,5 +7,6 @@ func _ready():
 	$Stefan.connect("requestSound", $SoundManager, "playSound")
 
 func connectEnemy(enemy):
-	$Stefan.connect("moved", enemy, "updatePlayerPosition")
+	if ($Stefan):
+		$Stefan.connect("moved", enemy, "updatePlayerPosition")
 	enemy.connect("requestSound", $SoundManager, "playSound")
