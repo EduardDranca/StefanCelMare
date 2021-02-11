@@ -6,6 +6,7 @@ var _weapon = _swordScene.instance()
 const MAX_SPEED = 200
 
 signal moved(position)
+signal playerDeath(camera)
 
 const enemyGroup = "enemies"
 
@@ -13,7 +14,11 @@ func _ready():
 	add_child(_weapon)
 	_weapon.setEnemyGroup(enemyGroup)
 	_weapon.connect("requestSound", self, "playSound")
+	connect("death", self, "playerDeath")
 
+func playerDeath():
+	emit_signal("playerDeath", $Camera2D)
+	
 func setTarget(target):
 	.setTarget(target)
 	_weapon.setTarget(_target)

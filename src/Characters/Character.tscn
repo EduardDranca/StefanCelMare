@@ -17,7 +17,6 @@ void fragment() {
 	COLOR.g = COLOR.g + hitAnimationTime / hitAnimationTotalTime * (1.f - COLOR.g);
 	COLOR.b = COLOR.b + hitAnimationTime / hitAnimationTotalTime * (1.f - COLOR.b);
 }"
-custom_defines = ""
 
 [sub_resource type="ShaderMaterial" id=2]
 shader = SubResource( 1 )

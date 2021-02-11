@@ -53,6 +53,7 @@ onready var AnimationPlayer = $AnimationPlayer
 onready var CharacterSprite = $Sprite
 
 signal requestSound(sound, position)
+signal death
 
 func _ready():
 	_currentHitPoints = _hitPoints
@@ -62,11 +63,12 @@ func _ready():
 	$HPBar.set_material(mat)
 	if (_hittable):
 		CharacterSprite.material.set_shader_param("hitAnimationTotalTime", _hitAnimationTotalTime)
-	AnimationPlayer.connect("animation_finished", self, "checkAnimationStop")
+#	AnimationPlayer.connect("animation_finished", self, "checkAnimationStop")
 
-func checkAnimationStop(animationName):
-	if (animationName == deathAnimation):
-		queue_free()
+#func checkAnimationStop(animationName):
+#	if (animationName == deathAnimation):
+#		emit_signal()
+#		queue_free()
 
 func hit(damage):
 	if (_hittable):
@@ -157,6 +159,7 @@ func checkIfDead():
 		if (AnimationPlayer.has_animation(deathAnimation)):
 			AnimationPlayer.play(deathAnimation)
 		else:
+			emit_signal("death")
 			queue_free()
 		return true
 	return false
