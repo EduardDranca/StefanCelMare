@@ -4,6 +4,7 @@ var _weaponDictionary = WeaponSceneDictionary.weaponSceneDictionary
 var _swordScene = _weaponDictionary.get("sword")
 var _weapon = _swordScene.instance()
 const MAX_SPEED = 200
+const collisionDamage = 1
 
 signal moved(position)
 signal playerDeath(camera)
@@ -14,6 +15,7 @@ func _ready():
 	add_child(_weapon)
 	_weapon.setEnemyGroup(enemyGroup)
 	_weapon.connect("requestSound", self, "playSound")
+	$HitArea.connect("body_entered", self, "enemyCollision")
 	connect("death", self, "playerDeath")
 
 func playerDeath():
@@ -22,6 +24,10 @@ func playerDeath():
 func setTarget(target):
 	.setTarget(target)
 	_weapon.setTarget(_target)
+
+func enemyCollision(body):
+	if body.is_in_group(enemyGroup):
+		hit(collisionDamage)
 
 func _input(event):
 	var newMovementSpeed = _movementSpeed;

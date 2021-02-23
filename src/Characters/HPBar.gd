@@ -9,7 +9,8 @@ func _ready():
 
 func display(permanently = false):
 	visible = true
-	$DisplayTimer.start()
+	if (!permanently):
+		$DisplayTimer.start()
 
 func setRatio(value):
 	value = clamp(value, 0, 1)
